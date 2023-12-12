@@ -1,0 +1,115 @@
+buildscript {
+    ext {
+        set("projectVersion", "1.0.0")
+        set("springBootVersion", "2.7.4")
+        set("springCloudVersion", "2021.0.1")
+        set("springDependencyVersion", "1.0.11.RELEASE")
+    }
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.freefair.gradle:lombok-plugin:6.3.0"
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyVersion}"
+    id 'idea'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = 'kr.pe.karsei.helper'
+version = projectVersion
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Logger
+    implementation 'org.slf4j:slf4j-api'
+
+    // Json
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    // Spring
+    implementation 'org.springframework:spring-core'
+    implementation 'org.springframework:spring-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation 'org.springframework.cloud:spring-cloud-context'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // Test
+    testImplementation 'org.assertj:assertj-core'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.springframework:spring-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.java.srcDirs
+    classifier('sources')
+}
+
+if (project.hasProperty('mavenUsername') && project.hasProperty('mavenPassword')) {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+                artifact sourceJar
+                versionMapping {
+                    usage('java-api') {
+                        fromResolutionOf('runtimeClasspath')
+                    }
+                    usage('java-runtime') {
+                        fromResolutionResult()
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                credentials {
+                    username = project.property('mavenUsername')
+                    password = project.property('mavenPassword')
+                }
+            }
+        }
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+bootJar.enabled(false)
+jar {
+    enabled = true
+    // *plain 삭제
+    classifier('')
+}
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'

@@ -1,0 +1,12 @@
+vault-property:
+  enabled: true
+  uri: ""
+  role-id: ""
+  secret-id: ""
+  engine-name: ""
+  fail-fast: true
+  request-connect-timeout: 10000
+  property-map: [ ]
+  override-system-properties: false
+  override-none: true
+  allow-override: true

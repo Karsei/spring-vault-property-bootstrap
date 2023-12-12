@@ -1,0 +1,2 @@
+org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+kr.pe.karsei.helper.vault.propertybootstrap.VaultPropertyBootstrapConfiguration

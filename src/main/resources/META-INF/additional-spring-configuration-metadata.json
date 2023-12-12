@@ -1,0 +1,67 @@
+{
+  "properties": [
+    {
+      "name": "vault-property.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Vault 자동 매핑 사용 여부",
+      "defaultValue": true
+    },
+    {
+      "name": "vault-property.uri",
+      "type": "java.lang.String",
+      "description": "Vault 경로",
+      "defaultValue": ""
+    },
+    {
+      "name": "vault-property.role-id",
+      "type": "java.lang.String",
+      "description": "role-id"
+    },
+    {
+      "name": "vault-property.secret-id",
+      "type": "java.lang.String",
+      "description": "secret-id"
+    },
+    {
+      "name": "vault-property.engine-name",
+      "type": "java.lang.String",
+      "description": "Secret 엔진 이름",
+      "defaultValue": ""
+    },
+    {
+      "name": "vault-property.fail-fast",
+      "type": "java.lang.Boolean",
+      "description": "Vault 에서 지정된 데이터 읽기 실패 시 바로 어플리케이션 종료 여부",
+      "defaultValue": true
+    },
+    {
+      "name": "vault-property.request-connect-timeout",
+      "type": "java.lang.Integer",
+      "description": "Vault 와 연결 Timeout 시간",
+      "defaultValue": 10000
+    },
+    {
+      "name": "vault-property.property-map",
+      "type": "java.util.Map",
+      "description": "Secret 과 Property Map"
+    },
+    {
+      "name": "vault-property.override-system-properties",
+      "type": "java.lang.Boolean",
+      "description": "spring.cloud.config.override-system-properties",
+      "defaultValue": false
+    },
+    {
+      "name": "vault-property.override-none",
+      "type": "java.lang.Boolean",
+      "description": "spring.cloud.config.override-none",
+      "defaultValue": true
+    },
+    {
+      "name": "vault-property.allow-override",
+      "type": "java.lang.Boolean",
+      "description": "spring.cloud.config.allow-override",
+      "defaultValue": true
+    }
+  ]
+}
